@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 
 import java.io.File;
@@ -46,6 +47,10 @@ public class FileDisplayActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_display);
+
+        Bundle bundle=getIntent().getExtras();
+        fileUrl = bundle.getString("fileUrl");
+
         initView();
     }
 
@@ -60,9 +65,6 @@ public class FileDisplayActivity extends AppCompatActivity {
             }
         });
 
-        fileUrl = "http://science.tju.edu.cn/xydt/xyxw/202002/P020200214561775555960.pdf";
-        //    fileUrl="http://prp.test/uploads/1/file/test/202102/list.docx";
-        //  fileUrl = "http://prp.test/uploads/1/file/test/202102/testlist.xlsx";
 
         if (!TextUtils.isEmpty(fileUrl)) {
             Log.e("zzz1", "文件path:" + fileUrl);
@@ -95,7 +97,6 @@ public class FileDisplayActivity extends AppCompatActivity {
         }
     }
 
-
     public void setFilePath(String fileUrl) {
         this.filePath = fileUrl;
     }
@@ -115,7 +116,7 @@ public class FileDisplayActivity extends AppCompatActivity {
                 return;
             }
         }
-
+        Log.e("zzz1", "downLoadFromNet: "+fileUrl);
         final Request request = new Request.Builder().url(fileUrl).build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
